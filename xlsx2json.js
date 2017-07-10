@@ -1,9 +1,12 @@
 var arguments = process.argv.splice(2);
-var filename  = arguments[0];
+var srcfile  = arguments[0];
+var desfile  = arguments[1];
+
+desfile = desfile == null ? srcfile : arguments[1];
 
 var xlsx = require("node-xlsx");
 var fs   = require('fs');
-var list = xlsx.parse("./" + filename +".xlsx");
+var list = xlsx.parse("./" + srcfile +".xlsx");
 
 var xlsxDatas = list[0].data
 
@@ -21,11 +24,11 @@ for (var k = 1; k < xlsxDatas.length; k++) {
 }
 
 var str = JSON.stringify(arr);
-fs.writeFile("./" + filename +".json", str, {encoding:'utf-8'}, function(err) {
+fs.writeFile("./" + desfile +".json", str, {encoding:'utf-8'}, function(err) {
     if (err) {
         console.log(err)
         return;
     }
 
-    console.log(filename + ".json 生成成功")
+    console.log(desfile + ".json 生成成功")
 });
